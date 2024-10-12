@@ -1,4 +1,5 @@
-Instrucciones de como funciona la pagina web.
+INSTRUCCIONES
+Descubre como funciona mi pagina web.
 Para ejecutar el proyecto es recomendable hacerlo desde Visual Studio Code con Node.js y MySQL previamente instalados, estos son los pasos para poner en marcha tanto el frontend como el backend:
 
 1. Configuración del Backend (Node.js y MySQL)
