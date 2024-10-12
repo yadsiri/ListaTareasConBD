@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>To-go list</title>
+    <link rel="stylesheet" href="./style.css">
+</head>
+<body>
+    <div class="container">
+        <h1>Lista de tareas pendientes</h1>
+        <div class="search">
+            <form>
+                <input type="text" id="nuevaTarea" placeholder="Agregar tarea">
+                <button type="button" class="btn-add">+</button>
+            </form>
+            <ul id="listaTareas"></ul> <!-- puedo usar mi js -->
+        </div>
+        <div class="empty">
+            <p>No tienes tareas pendientes.</p>
+        </div>
+    </div>
+    <script src="./app.js"></script>
+    <script src="./server/server.js"></script>
+</body>
+</html>
