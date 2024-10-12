@@ -32,10 +32,15 @@ const agregarTareaALista = (tarea) => {
   const p = document.createElement("p");
   p.textContent = tarea.descripcion;
 
-  li.appendChild(addCompleteBtn());
+  li.appendChild(addCompleteBtn(tarea));
   li.appendChild(p);
-  li.appendChild(addDeleteBtn(tarea.id)); //pasamos el ID para eliminar
+  li.appendChild(addDeleteBtn(tarea.id)); //se pasa el ID para eliminar
   ul.appendChild(li);
+
+  if (tarea.completada) {
+    li.classList.add("completed");
+  }
+
   empty.style.display = "none";
 };
 
@@ -59,7 +64,7 @@ function addDeleteBtn(id) {
   deleteBtn.className = "btn-delete";
 
   deleteBtn.addEventListener("click", async (e) => {
-    // Enviar petición DELETE al backend
+    //enviar petición DELETE al backend
     await fetch(`http://localhost:3000/listatareas/${id}`, {
       method: 'DELETE',
     });
@@ -76,16 +81,33 @@ function addDeleteBtn(id) {
   return deleteBtn;
 }
 
-// Botón para completar las tareas
-function addCompleteBtn() {
+//botón para completar las tareas
+function addCompleteBtn(tarea) {
   const completeBtn = document.createElement("button");
   completeBtn.textContent = "✓";
   completeBtn.className = "btn-complete";
 
-  completeBtn.addEventListener("click", (e) => {
+  completeBtn.addEventListener("click", async (e) => {
     const item = e.target.parentElement;
     item.classList.toggle("completed");
+
+    //determinar el estado actual de la tarea
+    const completada = item.classList.contains("completed") ? 1 : 0;
+
+    // enviar petición PUT al backend para actualizar el estado
+    await fetch(`http://localhost:3000/listatareas/${tarea.id}/completar`, {
+      method: 'PUT',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({ completada }),
+    });
   });
+
+  //si la tarea ya está completada, añadir la clase "completed"
+  if (tarea.completada) {
+    completeBtn.parentElement?.classList.add("completed");
+  }
 
   return completeBtn;
 }
