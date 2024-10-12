@@ -4,16 +4,16 @@ const bodyParser = require('body-parser');
 const cors = require('cors');
 const app = express();
 
-// Middleware
+//middleware
 app.use(bodyParser.json());
 app.use(cors());
 
-// Conectar a la base de datos MySQL
+//conectar a la base de datos MySQL
 const db = mysql.createConnection({
     host: 'localhost',
-    user: 'root',  // Cambia esto por tu usuario de MySQL
-    password: 'servidores',  // Cambia esto por tu contraseña de MySQL
-    database: 'listatareas'  // Cambia esto por tu base de datos
+    user: 'root', 
+    password: 'servidores', 
+    database: 'listatareas'  
 });
 
 db.connect((err) => {
@@ -57,7 +57,7 @@ app.post('/listatareas', (req, res) => {
 });
 
 app.get('/listatareas', (req, res) => {
-    const query = `SELECT * FROM tareasagregadas`; // Asegúrate de que aquí también esté el nombre correcto
+    const query = `SELECT * FROM tareasagregadas`;
     db.query(query, (err, rows) => {
         if (err) {
             res.status(400).json({ error: err.message });
@@ -69,12 +69,26 @@ app.get('/listatareas', (req, res) => {
 
 app.delete('/listatareas/:id', (req, res) => {
     const { id } = req.params;
-    const query = `DELETE FROM tareasagregadas WHERE id = ?`; // Cambia esto
+    const query = `DELETE FROM tareasagregadas WHERE id = ?`;
     db.query(query, [id], (err, result) => {
         if (err) {
             res.status(400).json({ error: err.message });
             return;
         }
         res.json({ message: 'Tarea eliminada correctamente' });
+    });
+});
+//ruta para actualizar el estado de la tarea (completada o no)
+app.put('/listatareas/:id/completar', (req, res) => {
+    const { id } = req.params;
+    const { completada } = req.body; //esperamos recibir si la tarea está completada o no
+
+    const query = `UPDATE tareasagregadas SET completada = ? WHERE id = ?`;
+    db.query(query, [completada, id], (err, result) => {
+        if (err) {
+            res.status(400).json({ error: err.message });
+            return;
+        }
+        res.json({ message: 'Tarea actualizada correctamente' });
     });
 });
