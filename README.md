@@ -38,6 +38,7 @@ bash
 Copiar código
 node server/server.js
 Esto levantará el servidor en el puerto 3000 y te permitirá conectarte con la base de datos y gestionar las tareas.
+Una manera de saber que esta funcionando correctamente es que esté la leyenda "servidor corriendo el el puerto 3000" (o en el puerto que estes utilizando.
 
 5.- Configuración del Frontend (HTML, CSS y JavaScript)
 Abre tu archivo index.html en Visual Studio Code y asegúrate de que todos los archivos referenciados (style.css, app.js) estén correctamente vinculados.
